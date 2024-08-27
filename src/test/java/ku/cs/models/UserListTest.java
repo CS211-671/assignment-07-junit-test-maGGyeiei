@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class UserListTest {
 
     @Test
-    @DisplayName("User should be found in UserList")
+    @DisplayName("ทดสอบว่ามีชื่อในระบบหรือไม่โดยค้นหาจากชื่อ")
     public void testUserListFindUser() {
         // TODO: add 3 users to UserList
 
@@ -18,10 +18,21 @@ class UserListTest {
         // String expected = "<one of username>";
         // String actual = user.getUsername();
         // assertEquals(expected, actual);
+
+        UserList userList = new UserList();
+        userList.addUser("หม่ำ", "1");
+        userList.addUser("เท่ง", "2");
+        userList.addUser("โหน่ง", "3");
+
+        User user = userList.findUserByUsername("เท่ง");
+
+        String expected = "เท่ง";
+        String actual = user.getUsername();
+        assertEquals(expected, actual);
     }
 
     @Test
-    @DisplayName("User can change password")
+    @DisplayName("ทดสอบว่าผู้ใช้สามารถเปลี่ยนรหัสผ่านได้หรือไม่")
     public void testUserCanChangePassword() {
         // TODO: add 3 users to UserList
 
@@ -29,10 +40,21 @@ class UserListTest {
 
         // TODO: assert that user can change password
         // assertTrue(actual);
+
+        UserList userList = new UserList();
+        userList.addUser("หม่ำ", "1");
+        userList.addUser("เท่ง", "2");
+        userList.addUser("โหน่ง", "3");
+
+        boolean isPasswordChanged = userList.changePassword("หม่ำ", "1", "newpassword");
+
+        assertTrue(isPasswordChanged);
+        User user = userList.findUserByUsername("หม่ำ");
+        assertTrue(user.validatePassword("newpassword"));
     }
 
     @Test
-    @DisplayName("User with correct password can login")
+    @DisplayName("ทดสอบว่าผู้ใช้สามารถ login ได้หรือไม่")
     public void testUserListShouldReturnObjectIfUsernameAndPasswordIsCorrect() {
         // TODO: add 3 users to UserList
 
@@ -40,10 +62,19 @@ class UserListTest {
 
         // TODO: assert that User object is found
         // assertEquals(expected, actual);
+
+        UserList userList = new UserList();
+        userList.addUser("หม่ำ", "1");
+        userList.addUser("เท่ง", "2");
+        userList.addUser("โหน่ง", "3");
+
+        User user = userList.login("หม่ำ", "1");
+
+        assertEquals("หม่ำ", user.getUsername());
     }
 
     @Test
-    @DisplayName("User with incorrect password cannot login")
+    @DisplayName("ทดสอบว่าไม่สามารถ login ได้หากใส่รหัสผ่านผิด")
     public void testUserListShouldReturnNullIfUsernameAndPasswordIsIncorrect() {
         // TODO: add 3 users to UserList
 
@@ -51,6 +82,14 @@ class UserListTest {
 
         // TODO: assert that the method return null
         // assertNull(actual);
-    }
 
+        UserList userList = new UserList();
+        userList.addUser("หม่ำ", "1");
+        userList.addUser("เท่ง", "2");
+        userList.addUser("โหน่ง", "3");
+
+        User user = userList.login("หม่ำ", "2");
+
+        assertNull(user);
+    }
 }

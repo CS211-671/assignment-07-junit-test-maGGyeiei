@@ -47,4 +47,24 @@ class StudentListTest {
         assertEquals("1",S1.getId());
     }
 
+    @Test
+    @DisplayName("ทดสอบว่าสามารถเพิ่ม score ผ่าน id ได้หรือไม่")
+    void giveScoreToId() {
+        students.addNewStudent("6610450315","Maggy");
+        Student S1 = students.findStudentById("6610450315");
+        S1.addScore(20);
+
+        assertEquals(20,S1.getScore());
+    }
+
+    @Test
+    @DisplayName("ทดสอบดูว่าเกรดตรงกับสัดส่วนคะแนนที่ได้หรือไม่")
+    void viewGradeOfId() {
+        students.addNewStudent("6610450315","Maggy");
+        Student S1 = students.findStudentById("6610450315");
+        S1.addScore(20);
+
+        assertEquals("F",S1.grade());
+    }
+
 }
